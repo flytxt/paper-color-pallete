@@ -1,0 +1,42 @@
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+
+<dom-module id="label-color-group">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <span class="label">{{config.label}}</span>
+    <div class="color-picker-wrap" on-tap="openColorPicker">
+      <paper-color-picker shape="square" type="hsl"></paper-color-picker>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'label-color-group',
+      properties: {
+        config: {
+          type: Object,
+          value: function() {
+            return {};
+          }
+        }
+      }
+    });
+  </script>
+</dom-module>

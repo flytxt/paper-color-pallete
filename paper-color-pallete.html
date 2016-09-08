@@ -1,4 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-color-picker/paper-color-picker.html">
+<link rel="import" href="label-color-group.html">
 
 <dom-module id="paper-color-pallete">
   <template>
@@ -6,8 +8,21 @@
       :host {
         display: block;
       }
+      .color-picker-wrap {
+        display: inline-block;
+        height: 50px;
+        width: 50px;
+      }
     </style>
-    <h2>Hello [[prop1]]</h2>
+    <template is="dom-repeat" items="{{configInput}}">
+      <label-color-group config="{{item}}" index=></label-color-group>
+      <!-- <div id="{{item+index}}">
+        <span class="label">{{item.label}}</span>
+        <div class="color-picker-wrap" on-tap="openColorPicker">
+          <paper-color-picker shape="square" type="hsl"></paper-color-picker>
+        </div>
+      </div> -->
+    </template>
   </template>
 
   <script>
@@ -16,11 +31,44 @@
       is: 'paper-color-pallete',
 
       properties: {
-        prop1: {
-          type: String,
-          value: 'paper-color-pallete',
+        // The input array sent to color pallete
+        /*
+          Example: [{
+            label: "Block-A",
+            color: "#fff"
+          }]
+        */
+        configInput: {
+          type: Array,
+          value: function() {
+            return [];
+          }
         },
+        // The key to be selected as Label
+        labelAs: {
+          type: String,
+          value: 'label'
+        },
+        // The key to be treated as Color
+        colorAs: {
+          type: String,
+          value: 'color'
+        },
+        // Shadow of configInput
+        _configInput: {
+          type: Array,
+          value: function() {
+            return [];
+          }
+        }
       },
+
+      openColorPicker: function(e) {
+        var target = e.target.querySelector('paper-color-picker');
+        if (target) {
+          target.open();
+        }
+      }
 
     });
   </script>
