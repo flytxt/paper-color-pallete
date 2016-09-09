@@ -6,7 +6,7 @@
   <template>
     <style>
       :host {
-        display: block;
+        display: flex;
       }
       .color-picker-wrap {
         display: inline-block;
@@ -14,8 +14,13 @@
         width: 50px;
       }
     </style>
-    <template is="dom-repeat" items="{{configInput}}">
-      <label-color-group config="{{item}}" index=></label-color-group>
+    <template is="dom-repeat" items="{{_configInput}}">
+      <label-color-group
+        config="{{item}}"
+        index="{{index}}"
+        parent="{{configInput}}"
+        label-as="[[labelAs]]"
+        color-as="[[colorAs]]"></label-color-group>
       <!-- <div id="{{item+index}}">
         <span class="label">{{item.label}}</span>
         <div class="color-picker-wrap" on-tap="openColorPicker">
@@ -55,6 +60,7 @@
           value: 'color'
         },
         // Shadow of configInput
+        // Color label
         _configInput: {
           type: Array,
           value: function() {
@@ -68,6 +74,36 @@
         if (target) {
           target.open();
         }
+      },
+
+      observers: ['configInputObs(configInput)'],
+
+      // Creates _configInput
+      configInputObs: function(configInput) {
+        var tempArr = [];
+        configInput.forEach(function(i) {
+          var tempElem = {
+            label: i[this.labelAs],
+            color: this.colorToObj(i[this.colorAs])
+          };
+          tempArr.push(tempElem);
+        }.bind(this));
+        this.set('_configInput', tempArr);
+      },
+
+      colorToObj: function(color) {
+        var _color = color.substr(1);
+        _color = _color.match(/.{1,2}/g);
+        return {
+          red: parseInt(_color[0].toString(16), 16),
+          green: parseInt(_color[1].toString(16), 16),
+          blue: parseInt(_color[2].toString(16), 16),
+          alpha: .5
+        };
+      },
+
+      getColors: function() {
+
       }
 
     });

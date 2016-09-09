@@ -21,6 +21,19 @@
       <demo-snippet>
         <template>
           <paper-color-pallete></paper-color-pallete>
+          <script>
+            var pcp = document.querySelector('paper-color-pallete');
+            pcp.configInput = [{
+              label: 'Block-A',
+              color: '#ff0000'
+            }, {
+              label: 'Block-C',
+              color: '#00ff00'
+            }, {
+              label: 'Block-F',
+              color: '#ff00dd'
+            }];
+          </script>
         </template>
       </demo-snippet>
     </div>
